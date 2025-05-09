@@ -1,0 +1,318 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6001",
+          "message": {
+            "text": "使用未初始化的内存“i”。"
+          },
+          "analysisTarget": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                },
+                "region": {
+                  "startLine": 483,
+                  "startColumn": 32
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "findOnePair",
+                  "decoratedName": "?findOnePair@@YA?AV?$vector@HV?$allocator@H@std@@@std@@AEAV?$vector@Ucard@@V?$allocator@Ucard@@@std@@@2@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 466,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 467,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 468,
+                            "startColumn": 9
+                          }
+                        },
+                        "message": {
+                          "text": "未初始化“i”"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 469,
+                            "startColumn": 29
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 472,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 473,
+                            "startColumn": 29
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 478,
+                            "startColumn": 29
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 483,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 484,
+                            "startColumn": 5
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 483,
+                            "startColumn": 31
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 472,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 484,
+                            "startColumn": 5
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///D:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+                          },
+                          "region": {
+                            "startLine": 483,
+                            "startColumn": 32
+                          }
+                        },
+                        "message": {
+                          "text": "已使用“i”，但可能尚未将其初始化"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.43.34808.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/运行.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "b609ed2c3cc054f1ba734ce4b388d1e2fe3258fc3c294bdb3f25875f13aee7ab"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/pch.h"
+          },
+          "hashes": {
+            "sha-256": "8edef6d6ed4309b48c38a26603f19553db7bb55f169224952836a833efd66b2c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/framework.h"
+          },
+          "hashes": {
+            "sha-256": "0dec0835393a3d579a7400dd6d6acb6b58c1eb2a20f9599d7c82503f21bb3726"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/targetver.h"
+          },
+          "hashes": {
+            "sha-256": "04eb68099e73039a3c12bbcf075f6f6b649ec420da4e4593b6c5e6b03d138769"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/玩家.h"
+          },
+          "hashes": {
+            "sha-256": "ba633afb6aa2b9215f7c891268a79e3725a38147b8c593f9fe4a54db0eeb0bd9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/牌类.h"
+          },
+          "hashes": {
+            "sha-256": "fa763281ed51540889501fd911da81a02a247b86fed7ad04277482d61a49b8fc"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/植物大战僵尸杂交版v2.1/德州扑克/德州扑克/card.h"
+          },
+          "hashes": {
+            "sha-256": "5eb20812f3b4c744ec28184f31af816770e592981e6382daf070c30e6e9825a5"
+          }
+        }
+      ]
+    }
+  ]
+}

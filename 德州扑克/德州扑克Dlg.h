@@ -78,4 +78,7 @@ public:
 	afx_msg void On弃牌();
 	afx_msg void On重开();
 	
+	afx_msg void On32798();
+	afx_msg void On偷看();
+	afx_msg void 查看奖池();
 };

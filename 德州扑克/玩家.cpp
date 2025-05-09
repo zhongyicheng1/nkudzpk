@@ -9,7 +9,7 @@ player::player(string playerName1, string password1)
 }
 player::player()
 {
-	chips = 1500;
+	chips = 2500;
 }
 
 
@@ -31,14 +31,26 @@ void player::backbet()
 
 void player::raise(int a)
 {
-	chips = chips - 2*a;
-	currentBet = 2 * a;
+	if (a == 0) {
+		chips -= 200;
+		currentBet = 200;
+	}
+	else {
+		chips = chips - 2 * a;
+		currentBet = 2 * a;
+	}
 }
 
 void player::call(int a)
 {
-	chips = chips - a;
-	currentBet =a;
+	if (a == 0) {
+		chips -= 100;
+		currentBet = 100;
+	}
+	else {
+		chips = chips - a;
+		currentBet = a;
+	}
 }
 
 void player::check()

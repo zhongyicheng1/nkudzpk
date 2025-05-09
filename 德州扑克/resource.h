@@ -63,12 +63,16 @@
 #define IDB_card33                      221
 #define IDB_card35                      222
 #define IDB_card41                      223
+#define IDD_laicai                      224
 #define IDC_BUTTON1                     1000
 #define IDC_LIST1                       1001
 #define IDC_EDIT_USERNAME               1003
 #define IDC_EDIT_PASSWORD               1004
 #define IDC_BUTTON2                     1005
 #define IDC_SHOW_PLAYER_INFO            1006
+#define IDC_EDIT1                       1007
+#define IDC_EDIT_INPUT                  1007
+#define IDC_BUTTON_OK                   1008
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_32773                        32773
@@ -96,14 +100,18 @@
 #define ID_32795                        32795
 #define ID_32796                        32796
 #define ID_32797                        32797
+#define ID_32798                        32798
+#define ID_32799                        32799
+#define ID_32800                        32800
+#define ID_32801                        32801
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        224
-#define _APS_NEXT_COMMAND_VALUE         32798
-#define _APS_NEXT_CONTROL_VALUE         1007
+#define _APS_NEXT_RESOURCE_VALUE        226
+#define _APS_NEXT_COMMAND_VALUE         32802
+#define _APS_NEXT_CONTROL_VALUE         1009
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

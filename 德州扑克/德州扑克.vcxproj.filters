@@ -48,6 +48,9 @@
     <ClInclude Include="运行.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="来财.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="德州扑克.cpp">
@@ -69,6 +72,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CLoginDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="来财.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

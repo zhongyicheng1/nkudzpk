@@ -191,6 +191,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="德州扑克.h" />
     <ClInclude Include="德州扑克Dlg.h" />
+    <ClInclude Include="来财.h" />
     <ClInclude Include="牌类.h" />
     <ClInclude Include="玩家.h" />
     <ClInclude Include="运行.h" />
@@ -205,6 +206,7 @@
     </ClCompile>
     <ClCompile Include="德州扑克.cpp" />
     <ClCompile Include="德州扑克Dlg.cpp" />
+    <ClCompile Include="来财.cpp" />
     <ClCompile Include="牌类.cpp" />
     <ClCompile Include="玩家.cpp" />
     <ClCompile Include="运行.cpp" />

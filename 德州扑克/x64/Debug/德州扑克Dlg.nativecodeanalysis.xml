@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\植物大战僵尸杂交版v2.1\德州扑克\德州扑克\</FILEPATH>
+      <FILENAME>德州扑克Dlg.cpp</FILENAME>
+      <LINE>377</LINE>
+      <COLUMN>19</COLUMN>
+    </SFA>
+    <DEFECTCODE>6302</DEFECTCODE>
+    <DESCRIPTION>格式字符串不匹配。</DESCRIPTION>
+    <FUNCTION>C德州扑克Dlg::OnBnClickedShowPlayerInfo</FUNCTION>
+    <DECORATED>?OnBnClickedShowPlayerInfo@C德州扑克Dlg@@QEAAXXZ</DECORATED>
+    <FUNCLINE>371</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

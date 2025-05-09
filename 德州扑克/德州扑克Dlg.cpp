@@ -7,6 +7,7 @@
 #include "德州扑克.h"
 #include "德州扑克Dlg.h"
 #include "afxdialogex.h"
+#include"来财.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -83,6 +84,9 @@ BEGIN_MESSAGE_MAP(C德州扑克Dlg, CDialogEx)
 	ON_COMMAND(ID_32794, &C德州扑克Dlg::On过牌1)
 	ON_COMMAND(ID_32795, &C德州扑克Dlg::On弃牌)
 	ON_COMMAND(ID_32797, &C德州扑克Dlg::On重开)
+	ON_COMMAND(ID_32798, &C德州扑克Dlg::On32798)
+	ON_COMMAND(ID_32799, &C德州扑克Dlg::On偷看)
+	ON_COMMAND(ID_32801, &C德州扑克Dlg::查看奖池)
 END_MESSAGE_MAP()
 
 
@@ -153,6 +157,7 @@ BOOL C德州扑克Dlg::OnInitDialog()
 		pMenu->EnableMenuItem(ID_32793, MF_BYCOMMAND | MF_GRAYED);
 		pMenu->EnableMenuItem(ID_32794, MF_BYCOMMAND | MF_GRAYED);
 		pMenu->EnableMenuItem(ID_32795, MF_BYCOMMAND | MF_GRAYED);
+		pMenu->EnableMenuItem(ID_32799, MF_BYCOMMAND | MF_GRAYED);
 	}
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -339,6 +344,9 @@ void C德州扑克Dlg::again()
 	turn2 = false; 
 	CMenu* pMenu = GetMenu();
 	pMenu->EnableMenuItem(ID_32780, MF_BYCOMMAND | MF_ENABLED);
+	if (playercomputer.chips < 0) {
+		AfxMessageBox(_T("恭喜你已经成功击败电脑"), MB_OK );
+	}
 }
 
 CString C德州扑克Dlg::printCards(std::vector<card>& cards)
@@ -403,6 +411,7 @@ void C德州扑克Dlg::On发底牌()
 	allchips = m_pCurrentPlayer->currentBet + playercomputer.currentBet;
 	CMenu* pMenu = GetMenu();
 	pMenu->EnableMenuItem(ID_32780, MF_BYCOMMAND | MF_GRAYED);
+	pMenu->EnableMenuItem(ID_32799, MF_BYCOMMAND | MF_ENABLED);
 }
 
 void C德州扑克Dlg::On显示自己的底牌()
@@ -476,51 +485,7 @@ void C德州扑克Dlg::On发三张翻牌()
 
 void C德州扑克Dlg::发一张转牌()
 {
-	if (turn2) {
-		poker1.deliverCards(1, communityCards);
-		card c = communityCards[3];
-		int a = GetCardIndex(c);
-		m_communityCardsImages[3] = &m_images[a];
-		poker1.deliverCards(1, communityCards);
-		card d = communityCards[4];
-		int e = GetCardIndex(d);
-		m_communityCardsImages[4] = &m_images[e];
-		Invalidate();
-		std::vector<card>playerhand;
-		std::vector<card>playerhand1;
-		playerhand1.push_back(player2Cards[0]);
-		playerhand1.push_back(player2Cards[1]);
-		for (int i = 0; i < 5; i++) {
-			playerhand1.push_back(communityCards[i]);
-		}
-		playerhand.push_back(player1Cards[0]);
-		playerhand.push_back(player1Cards[1]);
-		CString h = printCards(player1Cards);
-		MessageBox(_T("电脑底牌为"), (h), MB_OK);
-		for (int i = 0; i < 5; i++) {
-			playerhand.push_back(communityCards[i]);
-		}
-		if (evaluate1(playerhand, playerhand1) == 0) {
-			MessageBox(_T("电脑胜利"), _T("提示"), MB_OK);
-			playercomputer.chips += allchips;
-			turn1 = FALSE;
-			again();
-		}
-		else if (evaluate1(playerhand, playerhand1) == 1) {
-			MessageBox(_T("玩家胜利"), _T("提示"), MB_OK);
-			m_pCurrentPlayer->chips += allchips;
-			turn1 = FALSE;
-			again();
-		}
-		else if (evaluate1(playerhand, playerhand1) == 2) {
-			MessageBox(_T("平局"), _T("提示"), MB_OK);
-			m_pCurrentPlayer->chips += allchips / 2;
-			playercomputer.chips += allchips / 2;
-			turn1 = FALSE;
-			again();
-		}
-		return;
-	}
+	
 	if (m_pCurrentPlayer->isAllIn == true) {
 		double e = monteCarloSimulation(player1Cards, communityCards);
 		if (e >= 0.6) {
@@ -580,45 +545,81 @@ void C德州扑克Dlg::发一张转牌()
 		
 		}
 	}
+
 	poker1.deliverCards(1, communityCards);
 	card c = communityCards[3];
 	int a = GetCardIndex(c);
 	m_communityCardsImages[3] = &m_images[a];
 	Invalidate();
 	double e = monteCarloSimulation(player1Cards, communityCards);
-	if (e > 0.7) {
-		if (playercomputer.chips > m_pCurrentPlayer->currentBet * 2) {
-			playercomputer.raise(m_pCurrentPlayer->currentBet);
-			MessageBox(_T("电脑选择加注"), _T("提示"), MB_OK);
+	if (turn2 == true) {
+		if (e > 0.7) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet * 2) {
+				playercomputer.raise(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择加注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.AllIn();
+				MessageBox(_T("电脑选择Showhand"), _T("提示"), MB_OK);
+			}
+		}
+		else if (e > 0.4) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet) {
+				playercomputer.call(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择跟注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.fold();
+				MessageBox(_T("电脑选择弃牌"), _T("提示"), MB_OK);
+			}
 		}
 		else {
-			playercomputer.AllIn();
-			MessageBox(_T("电脑选择Showhand"), _T("提示"), MB_OK);
+			playercomputer.fold();
+			MessageBox(_T("电脑选择弃牌"), MB_OK);
+		}
+		allchips += playercomputer.currentBet;
+		if (playercomputer.isFolded == true) {
+			MessageBox(_T("玩家胜利"), MB_OK);
+			m_pCurrentPlayer->chips += allchips;
+			again();
+			return;
 		}
 	}
-	else if (e > 0.5) {
-		if (playercomputer.chips > m_pCurrentPlayer->currentBet) {
-			playercomputer.call(m_pCurrentPlayer->currentBet);
-			MessageBox(_T("电脑选择跟注"), _T("提示"), MB_OK);
+	else {
+		if (e > 0.7) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet * 2) {
+				playercomputer.raise(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择加注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.AllIn();
+				MessageBox(_T("电脑选择Showhand"), _T("提示"), MB_OK);
+			}
 		}
-		else {
+		else if (e > 0.5) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet) {
+				playercomputer.call(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择跟注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.check();
+				MessageBox(_T("电脑选择过牌"), _T("提示"), MB_OK);
+			}
+		}
+		else if (e > 0.25) {
 			playercomputer.check();
 			MessageBox(_T("电脑选择过牌"), _T("提示"), MB_OK);
 		}
-	}
-	else if (e > 0.25) {
-		playercomputer.check();
-		MessageBox(_T("电脑选择过牌"), _T("提示"), MB_OK);
-	}
-	else {
-		playercomputer.fold();
-		MessageBox(_T("电脑选择弃牌"), MB_OK);
-	}
-	allchips += playercomputer.currentBet;
-	if (playercomputer.isFolded == true) {
-		MessageBox(_T("玩家胜利"), MB_OK);
-		m_pCurrentPlayer->chips += allchips;
-		again();
+		else {
+			playercomputer.fold();
+			MessageBox(_T("电脑选择弃牌"), MB_OK);
+		}
+		allchips += playercomputer.currentBet;
+		if (playercomputer.isFolded == true) {
+			MessageBox(_T("玩家胜利"), MB_OK);
+			m_pCurrentPlayer->chips += allchips;
+			again();
+		}
 	}
 		CMenu* pMenu = GetMenu();
 		if (pMenu) {
@@ -641,51 +642,7 @@ void C德州扑克Dlg::发一张转牌()
 
 void C德州扑克Dlg::On发一张河牌()
 {
-	if (turn2) {
-		poker1.deliverCards(1, communityCards);
-		card c = communityCards[3];
-		int a = GetCardIndex(c);
-		m_communityCardsImages[3] = &m_images[a];
-		poker1.deliverCards(1, communityCards);
-		card d = communityCards[4];
-		int e = GetCardIndex(d);
-		m_communityCardsImages[4] = &m_images[e];
-		Invalidate();
-		std::vector<card>playerhand;
-		std::vector<card>playerhand1;
-		playerhand1.push_back(player2Cards[0]);
-		playerhand1.push_back(player2Cards[1]);
-		for (int i = 0; i < 5; i++) {
-			playerhand1.push_back(communityCards[i]);
-		}
-		playerhand.push_back(player1Cards[0]);
-		playerhand.push_back(player1Cards[1]);
-		CString h = printCards(player1Cards);
-		MessageBox(_T("电脑底牌为"), (h), MB_OK);
-		for (int i = 0; i < 5; i++) {
-			playerhand.push_back(communityCards[i]);
-		}
-		if (evaluate1(playerhand, playerhand1) == 0) {
-			MessageBox(_T("电脑胜利"), _T("提示"), MB_OK);
-			playercomputer.chips += allchips;
-			turn1 = FALSE;
-			again();
-		}
-		else if (evaluate1(playerhand, playerhand1) == 1) {
-			MessageBox(_T("玩家胜利"), _T("提示"), MB_OK);
-			m_pCurrentPlayer->chips += allchips;
-			turn1 = FALSE;
-			again();
-		}
-		else if (evaluate1(playerhand, playerhand1) == 2) {
-			MessageBox(_T("平局"), _T("提示"), MB_OK);
-			m_pCurrentPlayer->chips += allchips / 2;
-			playercomputer.chips += allchips / 2;
-			turn1 = FALSE;
-			again();
-		}
-		return;
-	}
+	
 	if (m_pCurrentPlayer->isAllIn == true) {
 		double e = monteCarloSimulation(player1Cards, communityCards);
 		if (e >= 0.6) {
@@ -751,40 +708,75 @@ void C德州扑克Dlg::On发一张河牌()
 	m_communityCardsImages[4] = &m_images[a];
 	Invalidate();
 	double e = monteCarloSimulation(player1Cards, communityCards);
-	if (e > 0.7) {
-		if (playercomputer.chips > m_pCurrentPlayer->currentBet * 2) {
-			playercomputer.raise(m_pCurrentPlayer->currentBet);
-			MessageBox(_T("电脑选择加注"), _T("提示"), MB_OK);
+	if (turn2 == true) {
+		if (e > 0.7) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet * 2) {
+				playercomputer.raise(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择加注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.AllIn();
+				MessageBox(_T("电脑选择Showhand"), _T("提示"), MB_OK);
+			}
+		}
+		else if (e > 0.4) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet) {
+				playercomputer.call(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择跟注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.fold();
+				MessageBox(_T("电脑选择弃牌"), _T("提示"), MB_OK);
+			}
 		}
 		else {
-			playercomputer.AllIn();
-			MessageBox(_T("电脑选择Showhand"), _T("提示"), MB_OK);
+			playercomputer.fold();
+			MessageBox(_T("电脑选择弃牌"), MB_OK);
+		}
+		allchips += playercomputer.currentBet;
+		if (playercomputer.isFolded == true) {
+			MessageBox(_T("玩家胜利"), MB_OK);
+			m_pCurrentPlayer->chips += allchips;
+			again();
+			return;
 		}
 	}
-	else if (e > 0.5) {
-		if (playercomputer.chips > m_pCurrentPlayer->currentBet) {
-			playercomputer.call(m_pCurrentPlayer->currentBet);
-			MessageBox(_T("电脑选择跟注"), _T("提示"), MB_OK);
+	else {
+		if (e > 0.7) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet * 2) {
+				playercomputer.raise(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择加注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.AllIn();
+				MessageBox(_T("电脑选择Showhand"), _T("提示"), MB_OK);
+			}
 		}
-		else {
+		else if (e > 0.5) {
+			if (playercomputer.chips > m_pCurrentPlayer->currentBet) {
+				playercomputer.call(m_pCurrentPlayer->currentBet);
+				MessageBox(_T("电脑选择跟注"), _T("提示"), MB_OK);
+			}
+			else {
+				playercomputer.check();
+				MessageBox(_T("电脑选择过牌"), _T("提示"), MB_OK);
+			}
+		}
+		else if (e > 0.3) {
 			playercomputer.check();
 			MessageBox(_T("电脑选择过牌"), _T("提示"), MB_OK);
 		}
-	}
-	else if (e > 0.3) {
-		playercomputer.check();
-		MessageBox(_T("电脑选择过牌"), _T("提示"), MB_OK);
-	}
-	else {
-		playercomputer.fold();
-		MessageBox(_T("电脑选择弃牌"), MB_OK);
-	}
-	allchips += playercomputer.currentBet;
-	if (playercomputer.isFolded == true) {
-		MessageBox(_T("玩家胜利"), MB_OK);
-		m_pCurrentPlayer->chips += allchips;
-		again();
-		return;
+		else {
+			playercomputer.fold();
+			MessageBox(_T("电脑选择弃牌"), MB_OK);
+		}
+		allchips += playercomputer.currentBet;
+		if (playercomputer.isFolded == true) {
+			MessageBox(_T("玩家胜利"), MB_OK);
+			m_pCurrentPlayer->chips += allchips;
+			again();
+			return;
+		}
 	}
 	turn1 = true;
 	CMenu* pMenu = GetMenu();
@@ -813,6 +805,7 @@ void C德州扑克Dlg::On加注()
 		m_pCurrentPlayer->raise(playercomputer.currentBet);
 		MessageBox(_T("玩家选择加注"), _T("提示"), MB_OK);
 		allchips += m_pCurrentPlayer->currentBet;
+		turn2 = true;
 	}
 	else {
 		MessageBox(_T("钱都不够，ALL IN吧"), _T("提示"), MB_OK);
@@ -820,7 +813,7 @@ void C德州扑克Dlg::On加注()
 	}
 	CMenu* pMenu = GetMenu();
 	if (pMenu) { 
-		pMenu->EnableMenuItem(ID_32780, MF_BYCOMMAND | MF_ENABLED);
+		
 		pMenu->EnableMenuItem(ID_32781, MF_BYCOMMAND | MF_ENABLED);
 		pMenu->EnableMenuItem(ID_32782, MF_BYCOMMAND | MF_ENABLED);
 		pMenu->EnableMenuItem(ID_32783, MF_BYCOMMAND | MF_ENABLED);
@@ -875,8 +868,9 @@ void C德州扑克Dlg::On跟注()
 	if (playercomputer.currentBet < m_pCurrentPlayer->chips) {
 		m_pCurrentPlayer->call(playercomputer.currentBet);
 		MessageBox(_T("玩家选择跟注"), _T("提示"), MB_OK);
+
 		allchips += m_pCurrentPlayer->currentBet;
-		turn2 = true;
+		turn2 = true;//turn2使对方不能过牌
 	}
 	else {
 		MessageBox(_T("钱都不够操作失败，过牌或者all_in吧"), _T("提示"), MB_OK);
@@ -884,7 +878,7 @@ void C德州扑克Dlg::On跟注()
 	}
 	CMenu* pMenu = GetMenu();
 	if (pMenu) {
-		pMenu->EnableMenuItem(ID_32780, MF_BYCOMMAND | MF_ENABLED);
+		
 		pMenu->EnableMenuItem(ID_32781, MF_BYCOMMAND | MF_ENABLED);
 		pMenu->EnableMenuItem(ID_32782, MF_BYCOMMAND | MF_ENABLED);
 		pMenu->EnableMenuItem(ID_32783, MF_BYCOMMAND | MF_ENABLED);
@@ -951,7 +945,7 @@ void C德州扑克Dlg::OnALLIN()
 			playercomputer.currentBet = m_pCurrentPlayer->currentBet;
 			allchips = allchips + m_pCurrentPlayer->currentBet * 2 - playercomputer.currentBet;
 			playercomputer.chips = playercomputer.currentBet - m_pCurrentPlayer->currentBet;
-			turn2 = true;
+			
 		}
 	}
 	m_pCurrentPlayer->AllIn();
@@ -1021,7 +1015,7 @@ void C德州扑克Dlg::On过牌1()
 	m_pCurrentPlayer->check();
 	CMenu* pMenu = GetMenu();
 	if (pMenu) {
-		pMenu->EnableMenuItem(ID_32780, MF_BYCOMMAND | MF_ENABLED);
+		
 		pMenu->EnableMenuItem(ID_32781, MF_BYCOMMAND | MF_ENABLED);
 		pMenu->EnableMenuItem(ID_32782, MF_BYCOMMAND | MF_ENABLED);
 		pMenu->EnableMenuItem(ID_32783, MF_BYCOMMAND | MF_ENABLED);
@@ -1086,5 +1080,34 @@ void C德州扑克Dlg::On弃牌()
 
 void C德州扑克Dlg::On重开()
 {
+	playercomputer.chips+= allchips;
 	again();
+}
+
+void C德州扑克Dlg::On32798()
+{
+
+	来财 dlg;
+	dlg.DoModal();
+	if (dlg.DoModal() == IDOK) {
+		m_pCurrentPlayer->chips += 500;
+	}
+	// TODO: 在此添加命令处理程序代码
+}
+
+void C德州扑克Dlg::On偷看()
+{
+	CString a = printCards(player1Cards);
+	MessageBox((a), MB_OK);
+	// TODO: 在此添加命令处理程序代码
+}
+
+void C德州扑克Dlg::查看奖池()
+{
+
+	CString strValue;
+	strValue.Format(_T("%d"),allchips); // 将 int 转换为 CString
+	MessageBox(strValue);
+
+	// TODO: 在此添加命令处理程序代码
 }

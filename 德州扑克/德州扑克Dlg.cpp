@@ -87,6 +87,7 @@ BEGIN_MESSAGE_MAP(C德州扑克Dlg, CDialogEx)
 	ON_COMMAND(ID_32798, &C德州扑克Dlg::On32798)
 	ON_COMMAND(ID_32799, &C德州扑克Dlg::On偷看)
 	ON_COMMAND(ID_32801, &C德州扑克Dlg::查看奖池)
+	ON_COMMAND(ID_32776, &C德州扑克Dlg::On32776)
 END_MESSAGE_MAP()
 
 
@@ -344,6 +345,9 @@ void C德州扑克Dlg::again()
 	turn2 = false; 
 	CMenu* pMenu = GetMenu();
 	pMenu->EnableMenuItem(ID_32780, MF_BYCOMMAND | MF_ENABLED);
+	pMenu->EnableMenuItem(ID_32781, MF_BYCOMMAND | MF_ENABLED);
+	pMenu->EnableMenuItem(ID_32782, MF_BYCOMMAND | MF_ENABLED);
+	pMenu->EnableMenuItem(ID_32783, MF_BYCOMMAND | MF_ENABLED);
 	if (playercomputer.chips < 0) {
 		AfxMessageBox(_T("恭喜你已经成功击败电脑"), MB_OK );
 	}
@@ -1109,5 +1113,11 @@ void C德州扑克Dlg::查看奖池()
 	strValue.Format(_T("%d"),allchips); // 将 int 转换为 CString
 	MessageBox(strValue);
 
+	// TODO: 在此添加命令处理程序代码
+}
+
+void C德州扑克Dlg::On32776()
+{
+	PostQuitMessage(0);
 	// TODO: 在此添加命令处理程序代码
 }

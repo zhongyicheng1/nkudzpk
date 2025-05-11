@@ -81,4 +81,5 @@ public:
 	afx_msg void On32798();
 	afx_msg void On偷看();
 	afx_msg void 查看奖池();
+	afx_msg void On32776();
 };
